@@ -9,7 +9,7 @@ Here listed the main contributors based on the machine. The list may change depe
 * **MST1**: **N. Vianello** (main author), N. Walkden, A. Hakkola, M. Bernert
 * **AUG**: E. Wolfrum, M. Griener, B. Tal, D. Brida, I. Cziegler
 * **TCV**: C. Tsui, C. Theiler, O. Fevrier, H. Reimerdes
-* **JET**: B. Lomanowski, M. Dunne, A. Huber
+* **JET**: B. Lomanowski, M. Dunne, A. Huber, C. Giroud
 
 ### Devices included
   * JET
@@ -22,3 +22,5 @@ Here listed the main contributors based on the machine. The list may change depe
   * Fluctuations in the main SOL using several diagnostics (GPI on AUG, Reciprocating Langmuir Probe (TCV), Thermal Helium Beam (AUG), Li-Beam (AUG))
   * Radiation (Bomoletry as well as visible cameras to infer D$_{\alpha}$ radiation available in all the devices. To be confirmed the availability on TCV)
   * Fluctuation in the main chamber wall through LPs on JET and TCV
+  * Evolution of separatrix E$_r$ in different target recycling condition. In principle data are available through edge CXRS and Doppler Backscattering on AUG, reciprocating langmuir on TCV. Availability of information on JET through KG8c under evaluation. Possibly relating this variation to observed SOL fluctuation transport modification.
+  * Heat flux target profile broadening and modification

@@ -1,0 +1,188 @@
+\documentclass[12pt, a4paper, twoside]{article}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+\rhead[]{\large\textbf{EXD}}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{graphicx}
+% \graphicspath{{../pdfbox/}}
+%% bibliography setting nature style, footnotesize in bibliography and
+%% avoiding in in articles
+\usepackage[style=nature,defernumbers=true,maxnames=1,firstinits=true,uniquename=init,backend=bibtex8,arxiv=abs,mcite]{biblatex}
+\bibliography{../biblio}
+%\renewcommand{\bibfont}{\normalfont\footnotesize}
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+  \printtext{\bibstring{in}\intitlepunct}}}
+\DeclareFieldFormat[article]{title}{}
+\AtBeginBibliography{\footnotesize}
+%% to set line space in bibliography
+\usepackage{setspace}
+%% to add affiliation to the title
+\usepackage[affil-it]{authblk}
+\renewcommand\Affilfont{\itshape\small}
+\setlength{\affilsep}{.2em}
+%% for figure caption
+\usepackage[format=plain, font=scriptsize,labelfont=bf]{caption}
+%% for figure wrapping
+\usepackage{wrapfig}
+%% for reference in a multi col
+\usepackage{multicol}
+% \captionsetup[figure]{font={footnotesize, stretch=1.}, belowskip=.01pt,
+%   aboveskip=0.3pt}
+\captionsetup[figure]{font={footnotesize, stretch=1.}, skip=0pt}
+%% titling
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+{\LARGE
+  \textbf{\@title}}
+
+\vspace{0.3ex}
+
+  \@author
+\end{flushleft}\egroup
+}
+\makeatother
+\title{SOL profile and transport and relation to divertor conditions in H-Mode plasmas: a cross-machine comparison}
+\author{N. Vianello$^{1}$,M. Dunne, B. Lomanowski, N. Walkden,
+  M. Griener, B. Tal, W. Wolfrum, I. Cziegler, D Brida, C. Tsui,
+  O. Fevrier, H. Reimerdes, C. Theiler, M. Bernert, A. Hakkola, A. Huber,
+  D. Carralero$^{2, 3}$,
+  V. Naulin$^{6}$,
+  M. Agostini$^{1}$, J. Boedo${^5}$,
+  B. Labit$^{4}$,  C. Theiler$^4$,
+  D. Aguiam$^{7}$,
+  S. Allan$^{8}$, M. Bernert$^{2}$,
+  S. Costea$^{9}$, I. Cziegler$^{10}$,
+  H. De Oliveira$^{4}$, J. Galdon-Quiroga$^{11}$,
+  G. Grenfell$^{1}$, A. Hakola$^{12}$,
+  C. Ionita$^{9}$, H. Isliker$^{13}$,
+  A. Karpushov$^{4}$,
+  J. Kovacic$^{14}$,  B. Lipschultz$^{10}$,
+  R. Maurizio$^{4}$, K. McClements$^{8}$, F. Militello$^{8}$,
+  J. Olsen$^{6}$, J. J. Rasmussen$^{6}$, T. Ravensbergen$^{16}$,
+  H. Reimerdes$^{4}$, B. Schneider$^9$, R. Schrittwieser$^9$,
+  M. Spolaore$^1$, K. Verhaegh$^{10}$, J. Vicente$^7$,
+  N. Walkden$^8$, W. Zhang$^2$, E. Wolfrum$^2$, the ASDEX-Upgrade Team,
+  the TCV-Team, the EUROfusion MST1 Team$^{*}$}
+
+\affil{
+  $^1$Consorzio RFX, Padova,Italy,
+  $^{2}$Max-Planck-Institut f{\"u}r Plasmaphysik, Garching, Germany,
+  $^{3}$CIEMAT Laboratorio Nacional de Fusi{\'o}n, Madrid, Spain,
+  $^{4}$EPFL-SPC, Switzerland,
+  $^5$UCSD,  La Jolla, USA,
+  $^{6}$DTU,  Copenhagen, Denmark,
+  $^7$IPFN, Instituto Superior T{\'e}cnico, Lisboa, Portugal,
+  $^{8}$CCFE, Culham, UK,
+  $^9$Institute for Ion Physics and Applied Physics,
+  Innsbruck,  Austria,
+  $^{10}$York Plasma Institute, University of York, UK,
+  $^{11}$University of Seville, Seville Spain,
+  $^{12}$VTT, Espoo, Finland,
+  $^{13}$Aristotle University of Thessaloniki, Greece,
+  $^{14}$Jozef Stefan Institute, Ljubljana,
+  $^{16}$DIFFER—Dutch Institute for Fundamental Energy Research, Netherlands,
+  $^{*}$See the author list H. Meyer et al 2017 Nucl. Fusion 57 102014}
+\date{\vspace{-3.5ex}}
+%%% ------------------------------------------------------------
+%%% BEGIN DOCUMENT
+%%% ------------------------------------------------------------
+\begin{document}
+\maketitle
+\vspace{-1.2em}
+{\it \small Corresponding Author:} {nicola.vianello@igi.cnr.it}
+
+Plasma Wall Interaction (PWI) is a subject of intense studies
+in the context of fusion energy research for the understanding of the amount of heat
+loads, tritium retention, and the lifetime of different Plasma Facing
+Components.
+In recent years great
+efforts have been devoted to the
+interpretation of Scrape Off Layer (SOL) transport, with clear impact also on the design of
+future machines \cite{Kocan:2015dc}.
+Transport in the SOL region, resulting
+from a competition between sources and losses parallel and
+perpendicular to the magnetic field, is dominated by
+the presence of intermittent structures, filaments, which strongly contribute to
+particle and energy losses both in L- and H-mode regimes.
+On the other side, with the
+approaching if ITER-era it is mandatory to
+address SOL transport in regimes which are relevant from the ITER
+perspective. As clearly highlighted in \cite{pitts:2019}, in order to
+keep the power fluxes densities acceptable for the target material
+high neutral pressure and partial detachment are needed in order to
+ensure maximum tolerable loads based on avoidance of W recrystallization.
+
+Experimentally these regimes are obtained in present experiments
+with high gas throughput leading to high density regimes and these
+regimes are generally accompanied in L-Mode by the development of a
+\emph{shoulder formation}
+describing the progressive flattening of the density
+scrape off layer profile at high density
+\cite{LaBombard:2001ks,Carralero:2015gu,Militello:2016hk,Vianello:2017ku}.
+Preliminary investigations suggested that similar inter-ELM SOL
+density profile broadening is observed in H-mode as well
+\cite{Muller:2015jt,Carralero:2017gb,vianello:nf2019}, more pronounced
+with high neutral pressure \cite{vianello:nf2019}.
+
+The present contribution will report results obtained in a
+coordinated effort within 3 different devices, JET, ASDEX-Upgrade and
+TCV focusing on the SOL profile evolution in different divertor recycling
+states, obtained at different recycling divertor condition, trying to
+correlate the observed profile modification with different turbulent SOL
+plasma transport. The mechanism of shoulder formation and the role of filamentary
+transport have been tested against variation of plasma current,
+magnetic topology, by comparing single and double null plasmas,
+and divertor neutral densities, through modification of
+cryopump efficiency.
+
+
+\begingroup
+\setstretch{0.8}
+{\footnotesize\textbf{Acknowledgment}\\
+This work has been carried out within the framework of the EUROfusion Consortium and has received funding from the Euratom
+research and training programme 2014-2018 under grant agreement No 633053. The views and opinions expressed herein do not
+necessarily reflect those of the European Commission.}
+\begin{multicols}{2}
+\setlength\bibitemsep{0pt}
+\printbibliography[heading=none]
+\end{multicols}
+\endgroup
+
+\end{document}
+
+% \begin{wrapfigure}{l}{67mm}
+% \centering
+% \includegraphics[width=67mm]{../pdfbox/EfoldBlobAllColor.pdf}
+% \caption{Top: Density decay length as a function of blob size
+%   at three level of currents at constant B$_t$ in
+%   AUG. Bottom: same for TCV}
+% \vspace{-2.6ex}
+% \label{fig:fig1}
+% \end{wrapfigure}
+
+% \begin{wrapfigure}{l}{96mm}
+% \centering
+% \includegraphics[width=96mm]{/Users/vianello/Desktop/Topic-21/Experiments/AUG/analysis/pdfbox/UpstreamDivertorProfiles34276_34278_34281}
+% \caption{ Shots
+%   \# 34276 and shot \# 34278 have the same fueling and seeding levels,
+%   but the shots have been operated respectively without and with
+%   the cryopump. Additional fueling and seeding have been added to Shot
+%   \#34281 where cryopump was in operations. The top
+%   panel show the time traces of edge density. The second rows show the
+% upstream profiles normalized to the value at the separatrix for the
+% three shots in 3 time instants indicated in the top panel with
+% different colors. The third rows report the target profiles at
+% the same instants whereas the last rows show the value of divertor
+% normalized collisionality $\Lambda_{div}$ as defined \cite{Carralero:2015gu}}
+% \vspace{-2ex}
+% \label{fig:fig2}
+% \end{wrapfigure}

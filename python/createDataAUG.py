@@ -27,14 +27,7 @@ import seaborn as sns
 
 def print_menu():
     print(30 * "-", "MENU", 30 * "-")
-    print("1. AUG power scan behaviour")
-    print("2. AUG power scan target behaviour")
-    print("3. THB analysis")
-    print("4. General plot for shot 34276, 36574, 36605")
-    print("5. General profiles for shot 34276, 36574, 36605")
-    print("6. Example and zooms of ELM behavior for shot 36574")
-    print("7. Compute the profile of Lambda for shot 34276, 36574, 36605")
-    print("8. Blob frequency in far SOL and neutrals shot 36574")
+    print("1. AUG profile for synopsis")
     print("99: End")
     print(67 * "-")
 
@@ -45,22 +38,23 @@ while loop:
     print_menu()
     selection = int(input("Enter your choice [1-99] "))
     if selection == 1:
-        shotList = 34276
-        tlist = ((2.245, 2.345), (5.4, 5.5))
-        thresh = (-99.0, 500)
+        shot= 34276
+        tList = ((2.245, 2.345), (5.4, 5.5))
+        threshL = (-99.0, 500)
         LiBes = dd.shotfile("LIN", shot)("ne").data.transpose() / 1e19
         LiRho = dd.shotfile("LIN", shot)("ne").area.data.transpose()
         LiTime = dd.shotfile("LIN", shot)("ne").time
         Ipol = dd.shotfile("MAC", shot)("Ipolsola").data
         IpolTime = dd.shotfile("MAC", shot)("Ipolsola").time
         F01 = dd.shotfile("IOC", shot)("F01")
-        En = dd.shotfile("TOT", shot)("H5_corr")
+        En = dd.shotfile("TOT", shot)("n/nGW")
         # now the profiles which is more subtle and long
-        for _idx, (_tr, _thr) in enumerate(zip(tList, thresL)):
-            _idx = np.where(np.logical_and(F01.time >= _tr[0], F01.time <= tr[1]))
+        for _idx, (_tr, _thr) in enumerate(zip(tList, threshL)):
+            _idx = np.where(np.logical_and(F01.time >= _tr[0], F01.time <= _tr[1]))
             PrLabel = F01.data[_idx].mean()
-            _idx = np.where(np.logical_and(En.time >= _tr[0], En.time <= tr[1]))
-            EnLabel = En.data[_idx].mean()
+            _idx = np.where(np.logical_and(En.time >= _tr[0], En.time <= _tr[1]))
+            gW = 0.8/(np.pi*np.power(0.5, 2))
+            EnLabel = En.data[_idx].mean()*gW
             if _thr != -99:
                 _idxT = np.where(((IpolTime >= _tr[0]) & (IpolTime <= _tr[1])))[0]
                 # now create an appropriate savgolfile
@@ -100,12 +94,12 @@ while loop:
             rawEn = np.asarray([np.nanmean(k) for k in yOut])
             rawEn_err = np.asarray([np.nanstd(k) for k in yOut])
             Data = np.load(
-                "/afs/ipp/home/n/nvian/analisi/28-itpa-divsol/Data/AUG/LastTargetShot{}_t{:.2f}".format(
+                "/afs/ipp/home/n/nvianell/analisi/28itpa-div-sol/Data/AUG/LastTargetShot{}_t{:.2f}".format(
                     shot, np.average(_tr)
-                )
+                )+'.npz'
             )
             teOSP = Data["Te"][np.argmin(np.abs(Data["rhoTe"] - 1))]
-            File = "../data/AUG/ProfileShot{}_t{:.2f}-{:.2f}".format(shot, tr[0], tr[1])
+            File = "../data/AUG/ProfileShot{}_t{:.2f}-{:.2f}".format(shot, _tr[0], _tr[1])
             np.savez(
                 File,
                 rawRho=rawRho,

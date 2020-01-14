@@ -1,11 +1,6 @@
 import profiletools
-from tcv import (
-    langmuir as tcvlangmuir,
-    baratrons as tcvbaratrons,
-    tcvgeom,
-    gas as tcvgas,
-    tcvProfiles,
-)
+import MDSplus as mds
+import langmuir as tcvlangmuir, baratrons as tcvbaratrons, tcvgeom, gas as tcvgas, tcvProfiles
 import numpy as np
 import gpr1dfusion
 from scipy.interpolate import UnivariateSpline, interp1d
@@ -34,7 +29,7 @@ while loop:
             En = Tree.getNode(r"\results::fir:n_average")
             tEn = En.getDimensionAt().data()
             En = En.data()
-            Pr = baratrons.pressure(shot).divertor
+            Pr = tcvbaratrons.pressure(shot).divertor
             tPr = Pr.t.values
             Pr = Pr.values
             _idx = np.where((tEn >= tr[0]) & (tEn <= tr[1]))[0]
@@ -60,7 +55,7 @@ while loop:
             rawRho = En.X.ravel()
             rawEn = En.y
             rawEn_err = En.err_y
-            Target = langmuir.LP(shot)
+            Target = tcvlangmuir.LP(shot)
             teOSP = np.asarray(
                 [
                     Target.te[i, np.argmin(np.abs(Target.Rho[i, :] - 1))]
@@ -70,12 +65,12 @@ while loop:
             _idx = np.where(np.logical_and(Target.t >= tr[0], Target.t <= tr[1]))
             teOSPm = np.mean(teOSP)
             File = "../data/TCV/ProfileShot{}_t{:.2f}-{:.2f}".format(shot, tr[0], tr[1])
-            np.save(
+            np.savez(
                 File,
                 rawRho=rawRho,
                 rawEn=rawEn,
                 rawEn_err=rawEn_err,
-                fitRho=fiRho,
+                fitRho=fitRho,
                 fitEn=fitEn,
                 fitEn_err=fitEn_err,
                 enAvg=enLabel,

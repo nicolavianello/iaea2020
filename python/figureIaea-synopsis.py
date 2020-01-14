@@ -29,8 +29,9 @@ try:
         JETProfiles,
         bin_by,
     )
+    from jet.data import sal
 except ImportWarning:
-    warning.warns("Jet library not loaded")
+    warning.warns("Jet library not loaded, JET figures can't be produced")
 try:
     from tcv import (
         langmuir as tcvlangmuir,
@@ -39,11 +40,11 @@ try:
         gas as tcvgas,
     )
 except ImportWarning:
-    warnings.warn("TCV library not loaded")
+    warnings.warn("TCV library not loaded, TCV figures can't be produced")
 try:
     from aug import myThbObject, langmuir as auglangmuir, libes as AUGLiB, geomaug
 except ImportWarning:
-    warnings.warn("AUG library not loaded")
+    warnings.warn("AUG library not loaded, AUG figures can't be produced")
 
 mpl.rcParams["font.family"] = "sans-serif"
 mpl.rc("font", size=22)
@@ -52,14 +53,8 @@ mpl.rc("font", **{"family": "sans-serif", "sans-serif": ["Tahoma"]})
 
 def print_menu():
     print(30 * "-", "MENU", 30 * "-")
-    print("1. AUG power scan behaviour")
-    print("2. AUG power scan target behaviour")
-    print("3. THB analysis")
-    print("4. General plot for shot 34276, 36574, 36605")
-    print("5. General profiles for shot 34276, 36574, 36605")
-    print("6. Example and zooms of ELM behavior for shot 36574")
-    print("7. Compute the profile of Lambda for shot 34276, 36574, 36605")
-    print("8. Blob frequency in far SOL and neutrals shot 36574")
+    print("1. Equilibria explored")
+    print("2. Upstream profiles and target conditions")
     print("99: End")
     print(67 * "-")
 
@@ -70,6 +65,10 @@ while loop:
     print_menu()
     selection = int(input("Enter your choice [1-99] "))
     if selection == 1:
+        # Devices = {'JET':{'shotList':(96543, 96543, 96542),
+        #     "tList":(48.65, 50.61, 49.66)},
+        #            'AUG':{'shotlist':}}
+        #
         shotList = (36342, 36343, 36345, 36346)
         colorList = ("#BC1AF0", "#324D5C", "#F29E38", "#FF3B30")
         lineStyle = (":", "-.", "--", "-")

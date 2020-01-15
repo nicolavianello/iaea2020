@@ -1,15 +1,8 @@
-# import matplotlib.gridspec as gridspec
 import warnings
 import numpy as np
 import matplotlib as mpl
-from matplotlib.ticker import AutoMinorLocator
 import json
 import seaborn as sns
-import gpr1dfusion
-from collections import OrderedDict
-from scipy.interpolate import UnivariateSpline, interp1d
-from scipy import constants
-import bottleneck as bn
 
 try:
     import MDSplus as mds
@@ -43,7 +36,8 @@ try:
 except:
     warnings.warn("TCV library not loaded, TCV figures can't be produced")
 try:
-    from aug import myThbObject, langmuir as auglangmuir, libes as AUGLiB, geomaug
+    # from aug import myThbObject, langmuir as auglangmuir, libes as AUGLiB, geomaug
+    from aug import myThbObject
 except:
     warnings.warn("AUG library not loaded, AUG figures can't be produced")
 
@@ -54,8 +48,9 @@ mpl.rc("font", **{"family": "sans-serif", "sans-serif": ["Tahoma"]})
 
 def print_menu():
     print(30 * "-", "MENU", 30 * "-")
-    print("1. Equilibria explored")
-    print("2. Upstream profiles at two different recycling state")
+    print("1. Fig 1 synopsis:Equilibria explored")
+    print("2. Fig 2 synopsis: Upstream profiles at two different recycling state")
+    print("3. Fig 3 synopsis: Fluctuation studies")
     print("99: End")
     print(67 * "-")
 
@@ -272,7 +267,7 @@ while loop:
                 color=col,
             )
             ax[0].text(
-                0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[0].transAxes, color=col,
+                0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[0].transAxes, color=col
             )
             # ax[0].text(
             #     0.45,
@@ -307,7 +302,7 @@ while loop:
                 ms=5,
             )
             ax[1].text(
-                0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[1].transAxes, color=col,
+                0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[1].transAxes, color=col
             )
             # ax[1].text(
             #     0.45,
@@ -346,7 +341,7 @@ while loop:
             )
 
             ax[2].text(
-                0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[2].transAxes, color=col,
+                0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[2].transAxes, color=col
             )
             # ax[2].text(
             #     0.45,
@@ -355,8 +350,148 @@ while loop:
             #     transform=ax[2].transAxes,
             #     color=col,
             # )
+        for _ax, l in zip(ax, ("(a)", "(b)", "(c)")):
+            _ax.text(0.1, 0.1, l, transform=_ax.transAxes)
 
         fig.savefig("../pdfbox/AllUpstreamProfiles_synopsis.pdf")
+
+    elif selection == 3:
+        fig, ax = mpl.pylab.subplots(figsize=(13, 5), nrows=1, ncols=3)
+        fig.subplots_adjust(bottom=0.15, wspace=0.25, right=0.98, left=0.08)
+        colorList = ("#0568A6", "#F29F05")
+
+        # ---------------------
+        # --- JET -------------
+        # ---------------------
+
+        DictionaryShot = {
+            "shotlist": (95502, 95642),
+            "tlist": ([47.6, 48.6], [47.4, 48]),
+            "color": ("#0568A6", "#F29F05"),
+        }
+        for _idxshot, (shot, col, trange, label) in enumerate(
+            zip(
+                DictionaryShot["shotlist"],
+                DictionaryShot["color"],
+                DictionaryShot["tlist"],
+                ("Low rec", "High rec"),
+            )
+        ):
+            Probe = JETProbe.limiterprobe(shot)
+            num = 11
+            rho = 0.5
+            Probe.load_data(num)
+            js, time, v = Probe.get_jsat(
+                trange=trange, inter_elm=True, elm_range=[0.7, 0.9], rho=rho
+            )
+            jsN = (js - js.mean()) / js.std()
+            sns.distplot(
+                jsN,
+                kde=True,
+                hist=True,
+                hist_kws={
+                    "range": [jsN.min(), np.quantile(jsN, 0.98)],
+                    "histtype": "step",
+                },
+                kde_kws={"clip": [jsN.min(), np.quantile(jsN, 0.98)]},
+                color=col,
+                ax=ax[0],
+            )
+            ax[0].text(
+                0.6, 0.9 - _idxshot * 0.1, label, transform=ax[0].transAxes, color=col
+            )
+        ax[0].set_yscale("log")
+        ax[0].set_xlim([-2.5, 4])
+        ax[0].set_ylim([5e-2, 3])
+        ax[0].set_xlabel(r"$\delta$J$_s$/$\sigma$")
+        ax[0].set_title("JET")
+
+        # ---------------------
+        # --- TCV -------------
+        # ---------------------
+        shot = 64948
+        Data = np.load(
+            "/Users/nicolavianello/Dropbox/Work/Collaborations/ITPA/28th-Div-SOL/Data/TCV/jsatFluctuation64948.npz"
+        )
+        jsWall = Data["jsWall"]
+        trange = ((0.9, 1.1), (1.65, 1.9))
+        t = Data["t"]
+        DataD = np.load("../data/TCV/DalphaShot64948.npz")
+        Dalpha = DataD["y"]
+        tDalpha = DataD["t"]
+        for _idxshot, (tr, col, label) in enumerate(
+            zip(trange, colorList, ("Low rec", "High rec"))
+        ):
+            _idx = np.where((t >= tr[0]) & (t <= tr[1]))[0]
+            # ---- WALL ----
+            # (jsWall[_idx] - jsWall[_idx].mean()) / (jsWall[_idx].std())
+            jsN = jsWall[_idx]
+            tN = t[_idx]
+            _idxDalpha = np.where((tDalpha >= tr[0]) & (tDalpha <= tr[1]))[0]
+            _x, _y = tDalpha[_idxDalpha], Dalpha[_idxDalpha]
+            ED = elm_detection.elm_detection(_x, _y, rho=0.82, width=0.01)
+            ED.run()
+            mask = ED.filter_signal(tN, inter_elm_range=[0.5, 0.9])
+            jsN = jsN[mask]
+            jsN = (jsN - jsN.mean()) / (jsN.std())
+            sns.distplot(
+                jsN,
+                kde=True,
+                hist=True,
+                hist_kws={
+                    "range": [jsN.min(), np.quantile(jsN, 0.99)],
+                    "histtype": "step",
+                },
+                kde_kws={"clip": [jsN.min(), np.quantile(jsN, 0.99)]},
+                color=col,
+                ax=ax[2],
+            )
+            ax[2].text(
+                0.6, 0.9 - _idxshot * 0.1, label, transform=ax[2].transAxes, color=col
+            )
+        ax[2].set_yscale("log")
+        ax[2].set_xlim([-2.5, 4])
+        ax[2].set_ylim([6e-3, 1])
+        ax[2].set_xlabel(r"$\delta$J$_s$/$\sigma$")
+        ax[2].set_title("TCV")
+        ax[2].legend(loc="best", frameon=False, numpoints=1)
+        # ---------------------
+        # --- AUG -------------
+        # ---------------------
+        Data = np.load("../data/AUG/fluctuationTHB36574.npz")
+        # np.savez(Filesave, time=time, blob_freq=blob_freq_trace, velocity=Velocity, amplitude=amplitude,
+        #          peakstart=np.arra
+        #          ...: y(Data.peak_start_time)[_refChannel])
+
+        peakStart = Data["peakstart"]
+        _idxA = np.where(peakStart <= 3)[0]
+        _idxB = np.where(peakStart >= 5.5)[0]
+        Velocity = Data["velocity"]
+        Amplitude = Data["amplitude"]
+        for _idxshot, (_i, _l, col) in enumerate(
+            zip((_idxA, _idxB), ("Low rec", "High rec"), colorList)
+        ):
+            _y = Velocity[_i]
+            _y = _y[np.logical_and(_y > 0, _y < 8)]
+
+            sns.distplot(
+                _y,
+                kde=True,
+                hist=True,
+                hist_kws={"range": [0, 8], "histtype": "step", "label": _l,},
+                kde_kws={"clip": [0, 8]},
+                color=col,
+                ax=ax[1],
+            )
+            ax[1].text(
+                0.6, 0.9 - _idxshot * 0.1, _l, transform=ax[1].transAxes, color=col
+            )
+        ax[1].set_xlabel(r"v$_r$ [km/s]")
+        ax[1].set_title("AUG")
+        for _ax, l in zip(ax, ("(a)", "(b)", "(c)")):
+            _ax.text(0.1, 0.9, l, transform=_ax.transAxes)
+        fig.savefig("../pdfbox/SynopsisFluctuationCombined.pdf", bbox_to_inches="tight")
+
     elif selection == 99:
         loop = False
     else:

@@ -10,6 +10,7 @@ from scipy import constants
 def print_menu():
     print(30 * "-", "MENU", 30 * "-")
     print("1. save profile for sinopsys figure")
+    print("2. Save dalpha for synopsis Dalpha ELM filtering")
     print("99: End")
     print(67 * "-")
 
@@ -78,8 +79,11 @@ while loop:
                 teosp=teOSPm,
             )
     elif selection == 2:
-        pass
-
+        shot = 64948
+        Tree = mds.Tree('tcv_shot',shot)
+        Dalpha = Tree.getNode(r'\base::pd:pd_001')
+        File = '../data/TCV/DalphaShot{}'.format(shot)
+        np.savez(File,t=Dalpha.getDimensionAt().data(),y=Dalpha.data())
     elif selection == 99:
         loop = False
     else:

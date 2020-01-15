@@ -94,7 +94,7 @@ while loop:
             rawEn = np.asarray([np.nanmean(k) for k in yOut])
             rawEn_err = np.asarray([np.nanstd(k) for k in yOut])
             if _idx == 1:
-                rawEn_err /= 1.5
+                rawEn_err /= 2.5
             Data = np.load(
                 "/afs/ipp/home/n/nvianell/analisi/28itpa-div-sol/Data/AUG/LastTargetShot{}_t{:.2f}".format(
                     shot, np.average(_tr)

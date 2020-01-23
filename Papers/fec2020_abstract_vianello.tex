@@ -1,1 +1,105 @@
-\documentclass[12pt, a4paper]{fec}\usepackage{fontspec}\setmainfont[Mapping=tex-text]{Times New Roman}\usepackage{graphicx}\graphicspath{{../pdf_box/}}\usepackage[subject={Top1},author={Nicola Vianello},version=1]{pdfcomment}%% bibliography setting nature style, footnotesize in bibliography and%% avoiding in in articles\usepackage[style=nature,defernumbers=true,maxnames=1,firstinits=true,uniquename=init,backend=bibtex8,arxiv=abs,mcite]{biblatex}\bibliography{../biblio}%\renewcommand{\bibfont}{\normalfont\footnotesize}\renewbibmacro{in:}{%  \ifentrytype{article}{}{%  \printtext{\bibstring{in}\intitlepunct}}}\DeclareFieldFormat[article]{title}{}\AtBeginBibliography{%  \footnotesize  \renewcommand*{\mkbibnamelast}[1]{\uppercase{#1}}%  \renewcommand*{\mkbibnameprefix}[1]{\uppercase{#1}}%}% we also redefine the bibliography environment to print the% bibliography on a single line\defbibenvironment{bibliography}  {\noindent}% or {} if you like indentation  {\unspace}  {\printtext[labelnumberwidth]{%    \printfield{prefixnumber}%    \printfield{labelnumber}}    \addspace}\renewbibmacro*{finentry}{\finentry\addspace}%% to set line space in bibliography\usepackage{setspace}\setlength{\floatsep}{1pt}% \setlength{\belowcaptionskip}{-10pt}\setlength{\textfloatsep}{5pt}\title{SOL transport and filamentary dynamics in high density tokamak regimes}\author{N. Vianello$^{1}$,  D. Carralero$^{2, 3}$, C. K. Tsui$^{5, 4}$,  V. Naulin$^{6}$,  M. Agostini$^{1}$, J. Boedo${^5}$,  B. Labit$^{4}$,  C. Theiler$^4$,  D. Aguiam$^{7}$,  S. Allan$^{8}$, M. Bernert$^{2}$,  S. Costea$^{9}$, I. Cziegler$^{10}$,  H. De Oliveira$^{4}$, J. Galdon-Quiroga$^{11}$,  G. Grenfell$^{1}$, A. Hakola$^{12}$,   C. Ionita$^{9}$, H. Isliker$^{13}$,  A. Karpushov$^{4}$,  J. Kovacic$^{14}$,  B. Lipschultz$^{10}$,    R. Maurizio$^{4}$, K. McClements$^{8}$, F. Militello$^{8}$,   J. Olsen$^{6}$, J. J. Rasmussen$^{6}$, T. Ravensbergen$^{16}$,  H. Reimerdes$^{4}$, B. Schneider$^9$, R. Schrittwieser$^9$,  M. Spolaore$^1$, K. Verhaegh$^{10}$, J. Vicente$^7$,   N. Walkden$^8$, W. Zhang$^2$, E. Wolfrum$^2$, the ASDEX-Upgrade Team,  the TCV-Team, the EUROfusion MST1 Team$^{*}$}\affil{  $^1$Consorzio RFX, Padova,Italy,  $^{2}$Max-Planck-Institut f{\"u}r Plasmaphysik, Garching, Germany,  $^{3}$CIEMAT Laboratorio Nacional de Fusi{\'o}n, Madrid, Spain,  $^{4}$EPFL-SPC, Switzerland,   $^5$UCSD,  La Jolla, USA,  $^{6}$DTU,  Copenhagen, Denmark,  $^7$IPFN, Instituto Superior T{\'e}cnico, Lisboa, Portugal,  $^{8}$CCFE, Culham, UK,  $^9$Institute for Ion Physics and Applied Physics,  Innsbruck,  Austria,  $^{10}$York Plasma Institute, University of York, UK,   $^{11}$University of Seville, Seville Spain,  $^{12}$VTT, Espoo, Finland,  $^{13}$Aristotle University of Thessaloniki, Greece,  $^{14}$Jozef Stefan Institute, Ljubljana,  $^{16}$DIFFER—Dutch Institute for Fundamental Energy Research, Netherlands,  $^{*}$See the author list H. Meyer et al 2017 Nucl. Fusion 57 102014}% must be present\doi%email of corresponding author\emailID{nicola.vianello@igi.cnr.it}%your paper number%\PaperNumber{EXD} \begin{document}\maketitle\pagenumbering{gobble}Addressing the role of Scrape Off Layer filamentary transport is a subject of intense studies in fusion science. Intermittent structures dominate transport in L-Mode and strongly contribute to particle and energy losses in H-mode. The role of convective radial losses has become even more important due to its contribution to the \emph{shoulder formation} in L-Mode, describing the progressive flattening of the density scrape off layer profile at high density \cite{Carralero:2017gb,Militello:2016hk,Vianello:2017ku}. Investigation of this process revealed the strong relationship between divertor conditions and the upstream profiles, mediated by filaments dynamics which varies according to the downstream conditions. Preliminary investigations suggested that similar mechanisms occur in H-Mode \cite{Carralero:2017gb} and that filaments contribute the SOL transport in H-mode density limit (HDL) as well \cite{bernert2014h}. The present contribution will report on results obtained on ASDEX-Upgrade and TCV tokamaks, to address the role of filamentary transport in high density regimes both in L- and H-Mode. The combined results enlarge the operational space, from a device with a closed divertor, metallic first wall and cryogenic pumping system to a carbon machine with a completely open divertor. The mechanism of shoulder formation and the role of filaments have been tested against variation of plasma current, magnetic configuration (single and double null plasmas), and divertor neutral densities, through modification of cryopump efficiency. At constant magnetic field the density decay length increases with filament-size independently of the plasma current for both machines in L-mode, consistently with the fact that upstream profiles and divertor neutral pressure exhibit the same trend with normalized greenwald fraction. In H-Mode fueling is insufficient to cause flattening of SOL profiles in the inter-ELM phases since large neutral pressure is needed. Consistently inter-ELM blob size in AUG are found larger whenever the cryopumps is switched off. The resulting picture suggests a complex relationship between divertor and upstream profiles, where filaments are modified by divertor conditions as well as by neutral particles interaction. \begingroup\setstretch{0.8}{\footnotesizeThis work has been carried out within the framework of the EUROfusion Consortium and has received funding from the Euratomresearch and training programme 2014-2018 under grant agreement No 633053. The views and opinions expressed herein do notnecessarily reflect those of the European Commission.\\}\endgroup\printbibliography[heading=none]\end{document}
+\documentclass[12pt, a4paper]{fec}
+\usepackage{fontspec}
+\setmainfont[Mapping=tex-text]{Times New Roman}
+\usepackage{graphicx}
+\graphicspath{{../pdf_box/}}
+\usepackage[subject={Top1},author={Nicola
+  Vianello},version=1]{pdfcomment}
+%% bibliography setting nature style, footnotesize in bibliography
+%% and
+%% avoiding in in articles
+\usepackage[style=nature,defernumbers=true,maxnames=1,firstinits=true,uniquename=init,backend=bibtex8,arxiv=abs,mcite]{biblatex}
+\bibliography{../biblio}
+\renewcommand{\bibfont}{\normalfont\footnotesize}
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+  \printtext{\bibstring{in}\intitlepunct}}}
+\DeclareFieldFormat[article]{title}{}
+\AtBeginBibliography{%
+  \footnotesize
+  \renewcommand*{\mkbibnamelast}[1]{\uppercase{#1}}%
+  \renewcommand*{\mkbibnameprefix}[1]{\uppercase{#1}}%
+}
+% we also redefine the bibliography environment to print the
+% bibliography on a single line
+\defbibenvironment{bibliography}
+  {\noindent}% or {} if you like indentation
+  {\unspace}
+  {\printtext[labelnumberwidth]{%
+    \printfield{prefixnumber}%
+    \printfield{labelnumber}}
+    \addspace}
+\renewbibmacro*{finentry}{\finentry\addspace}
+
+%% to set line space in bibliography
+\usepackage{setspace}
+\setlength{\floatsep}{1pt}
+% \setlength{\belowcaptionskip}{-10pt}
+\setlength{\textfloatsep}{5pt}
+  O. Fevrier$^5$,
+  H. De Oliveira$^{5}$,
+  M. Agostini$^{1}$,
+  S. Aleiferis$^9$,
+  M. Bernert$^3$,
+  J. Boedo${^6}$,
+  M. Brix$^{2}$,
+  D. Carralero$^{10}$,
+  I. Carvalho$^{2, 15}$,
+  C. Giroud$^2$,
+  A. Hakola$^{11}$,
+  A. Huber$^{12}$,
+  J. Karhunen$^{13}$,
+  A. Karpushov$^{5}$,
+  B. Labit$^5$,
+  A. Meigs$^2$,
+  V. Naulin$^{14}$,
+  T. Pereira$^{15}$,
+  H. Reimerdes$^5$,
+  C. Theiler$^5$,
+  the ASDEX-Upgrade Team,
+  the TCV-Team,
+  the EUROfusion MST1 Team$^{*}$
+  and JET Contributors$^{**}$}
+
+
+\affil{$^1$Consorzio RFX, Padova,Italy,
+  $^{2}$CCFE, Culham, UK,
+  $^{3}$Max-Planck-Institut f{\"u}r Plasmaphysik, Garching, Germany,
+  $^{4}$Oak Ridge National Laboratory,
+  $^{5}$EPFL-SPC, Switzerland,
+  $^6$UCSD,  La Jolla, USA,
+  $^7$Wigner Research Centre for Physics,
+  $^{8}$York Plasma Institute, University of York, UK,
+  $^9$NCSR Athens GR,
+  $^{10}$CIEMAT Laboratorio Nacional de Fusi{\'o}n, Madrid, Spain,
+  $^{11}$VTT, Espoo, Finland,
+  $^{12}$Forschungszentrum Julich,
+  $^{13}$Aalto University, Espoo, Finland,
+  $^{14}$DTU,  Copenhagen, Denmark,
+  $^{15}$IST/IPFN, Lisbon, Portugal
+  $^{*}$See the author list B. Labit et al 2019 Nucl. Fusion 59 086020,
+$^{**}$See the authors list E. Joffrin et al 2019 Nucl. Fusion 59 112021 }
+
+% must be present
+\doi
+
+%email of corresponding author
+\emailID{nicola.vianello@igi.cnr.it}
+
+%your paper number
+%\PaperNumber{EXD}
+
+
+\begin{document}
+\maketitle
+\pagenumbering{gobble}
+Addressing the role of Scrape Off Layer filamentary transport is a subject of intense studies in fusion science. Intermittent structures dominate transport in L-Mode and strongly contribute to particle and energy losses in H-mode. The role of convective radial losses has become even more important due to its contribution to the \emph{shoulder formation} in L-Mode, describing the progressive flattening of the density scrape off layer profile at high density \cite{Carralero:2017gb,Militello:2016hk,Vianello:2017ku}. Investigation of this process revealed the strong relationship between divertor conditions and the upstream profiles, mediated by filaments dynamics which varies according to the downstream conditions. Preliminary investigations suggested that similar mechanisms occur in H-Mode \cite{Carralero:2017gb} and that filaments contribute the SOL transport in H-mode density limit (HDL) as well \cite{bernert2014h}. The present contribution will report on results obtained on ASDEX-Upgrade and TCV tokamaks, to address the role of filamentary transport in high density regimes both in L- and H-Mode. The combined results enlarge the operational space, from a device with a closed divertor, metallic first wall and cryogenic pumping system to a carbon machine with a completely open divertor. The mechanism of shoulder formation and the role of filaments have been tested against variation of plasma current, magnetic configuration (single and double null plasmas), and divertor neutral densities, through modification of cryopump efficiency. At constant magnetic field the density decay length increases with filament-size independently of the plasma current for both machines in L-mode, consistently with the fact that upstream profiles and divertor neutral pressure exhibit the same trend with normalized greenwald fraction. In H-Mode fueling is insufficient to cause flattening of SOL profiles in the inter-ELM phases since large neutral pressure is needed. Consistently inter-ELM blob size in AUG are found larger whenever the cryopumps is switched off. The resulting picture suggests a complex relationship between divertor and upstream profiles, where filaments are modified by divertor conditions as well as by neutral particles interaction.
+\begingroup
+\setstretch{0.8}
+{\footnotesize
+This work has been carried out within the framework of the EUROfusion Consortium and has received funding from the Euratom
+research and training programme 2014-2018 under grant agreement No 633053. The views and opinions expressed herein do not
+necessarily reflect those of the European Commission.\\}
+\endgroup
+\printbibliography[heading=none]
+\end{document}

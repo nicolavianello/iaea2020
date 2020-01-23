@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib as mpl
 import json
 import seaborn as sns
+import gpr1dfusion
 
 try:
     import MDSplus as mds
@@ -231,7 +232,7 @@ while loop:
         label = ("Low Rec", "High Rec")
         for _idxshot, (shot, col, lb) in enumerate(zip(shotList, colorList, label)):
             # determine the corresponding average Te
-            jsonfile = "/Users/nicolavianello/Desktop/M18-41/Analysis/data/shot{}-VT5C.json".format(
+            jsonfile = "/Users/vianello/Desktop/M18-41/Analysis/data/shot{}-VT5C.json".format(
                 shot
             )
             Dictionary = {}
@@ -243,7 +244,7 @@ while loop:
                 y[np.logical_and(t >= Dictionary["tmin"], t <= Dictionary["tmax"])]
             )
             # now load the saved profiles
-            File = "/Users/nicolavianello/Desktop/M18-41/Analysis/data/Shot{}_VT5C.npz".format(
+            File = "/Users/vianello/Desktop/M18-41/Analysis/data/Shot{}_VT5C.npz".format(
                 shot
             )
             Data = np.load(File)
@@ -255,10 +256,10 @@ while loop:
                 fmt="o",
                 color=col,
                 alpha=0.3,
-                ms=5,
+                ms=12,
                 errorevery=5,
             )
-            ax[0].plot(Data["rhofit"], Data["enfit"] / _norm, "-", lw=2, color=col)
+            ax[0].plot(Data["rhofit"], Data["enfit"] / _norm, "-", lw=3, color=col)
             ax[0].fill_between(
                 Data["rhofit"],
                 (Data["enfit"] - Data["denfit"]) / _norm,
@@ -286,20 +287,35 @@ while loop:
         )
         for _idxshot, (file, col, lb) in enumerate(zip(FileList, colorList, label)):
             Data = np.load(file)
-            _norm = Data["rawEn"][np.argmin(np.abs(Data["rawRho"] - 1))]
+            # provide a fit using the same gpr1dfusion
+            rhoN = np.linspace(Data["rawRho"].min(), Data["rawRho"].max(), 150)
             if _idxshot == 1:
                 _e = Data["rawEn_err"] / 2.0
             else:
                 _e = Data["rawEn_err"]
+            gp = gpr1dfusion.GibbsInverseGaussianFGPR1D(
+                Data["rawRho"], Data["rawEn"], _e, xe=Data["rawRho_err"], nrestarts=200
+            )
+            gp.GPRFit(rhoN)
+            yFit, yFitE, _, _ = gp.get_gp_results()
+            _norm = yFit[np.argmin(np.abs(rhoN - 1))]
             ax[1].errorbar(
                 Data["rawRho"],
                 Data["rawEn"] / _norm,
                 xerr=Data["rawRho_err"],
                 yerr=_e / _norm,
-                fmt="-o",
+                fmt="o",
                 color=col,
                 alpha=0.5,
-                ms=5,
+                ms=12,
+            )
+            ax[1].plot(rhoN, yFit / _norm, "-", color=col, lw=3)
+            ax[1].fill_between(
+                rhoN,
+                (yFit - yFitE) / _norm,
+                (yFit + yFitE) / _norm,
+                color=col,
+                alpha=0.05,
             )
             ax[1].text(
                 0.45, 0.9 - 0.1 * _idxshot, lb, transform=ax[1].transAxes, color=col
@@ -329,9 +345,9 @@ while loop:
                 fmt="o",
                 color=col,
                 alpha=0.5,
-                ms=5,
+                ms=12,
             )
-            ax[2].plot(Data["fitRho"], Data["fitEn"] / _norm, "-", color=col, lw=2)
+            ax[2].plot(Data["fitRho"], Data["fitEn"] / _norm, "-", color=col, lw=3)
             ax[2].fill_between(
                 Data["fitRho"],
                 (Data["fitEn"] - Data["fitEn_err"]) / _norm,
@@ -392,8 +408,9 @@ while loop:
                 hist_kws={
                     "range": [jsN.min(), np.quantile(jsN, 0.98)],
                     "histtype": "step",
+                    "linewidth": 2,
                 },
-                kde_kws={"clip": [jsN.min(), np.quantile(jsN, 0.98)]},
+                kde_kws={"clip": [jsN.min(), np.quantile(jsN, 0.98)], "linewidth": 3},
                 color=col,
                 ax=ax[0],
             )
@@ -411,7 +428,7 @@ while loop:
         # ---------------------
         shot = 64948
         Data = np.load(
-            "/Users/nicolavianello/Dropbox/Work/Collaborations/ITPA/28th-Div-SOL/Data/TCV/jsatFluctuation64948.npz"
+            "/Users/vianello/Dropbox/Work/Collaborations/ITPA/28th-Div-SOL/Data/TCV/jsatFluctuation64948.npz"
         )
         jsWall = Data["jsWall"]
         trange = ((0.9, 1.1), (1.65, 1.9))
@@ -441,8 +458,9 @@ while loop:
                 hist_kws={
                     "range": [jsN.min(), np.quantile(jsN, 0.99)],
                     "histtype": "step",
+                    "linewidth": 2,
                 },
-                kde_kws={"clip": [jsN.min(), np.quantile(jsN, 0.99)]},
+                kde_kws={"clip": [jsN.min(), np.quantile(jsN, 0.99)], "linewidth": 3},
                 color=col,
                 ax=ax[2],
             )
@@ -478,8 +496,13 @@ while loop:
                 _y,
                 kde=True,
                 hist=True,
-                hist_kws={"range": [0, 8], "histtype": "step", "label": _l,},
-                kde_kws={"clip": [0, 8]},
+                hist_kws={
+                    "range": [0, 8],
+                    "histtype": "step",
+                    "label": _l,
+                    "linewidth": 2,
+                },
+                kde_kws={"clip": [0, 8], "linewidth": 3},
                 color=col,
                 ax=ax[1],
             )

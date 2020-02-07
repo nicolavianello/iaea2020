@@ -1,7 +1,7 @@
 \documentclass[12pt, a4paper, twoside]{article}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhf{}
+%\fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \addtolength{\headwidth}{\marginparsep}
 \addtolength{\headwidth}{\marginparwidth}
@@ -37,9 +37,9 @@
 \usepackage{wrapfig}
 %% for reference in a multi col
 \usepackage{multicol}
-% \captionsetup[figure]{font={footnotesize, stretch=1.}, belowskip=.01pt,
-%   aboveskip=0.3pt}
-\captionsetup[figure]{font={footnotesize, stretch=1.}, skip=0pt}
+\captionsetup[figure]{font={footnotesize, stretch=1.}, belowskip=.01pt,
+  aboveskip=0.3pt}
+%\captionsetup[figure]{font={footnotesize, stretch=1.}, skip=0pt}
 %% titling
 \makeatletter
 \renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
@@ -74,15 +74,16 @@
   M. Brix$^{2}$,
   D. Carralero$^{10}$,
   I. Carvalho$^{2, 15}$,
+  L. Frassinetti$^{11}$,
   C. Giroud$^2$,
-  A. Hakola$^{11}$,
-  A. Huber$^{12}$,
-  J. Karhunen$^{13}$,
+  A. Hakola$^{12}$,
+  A. Huber$^{13}$,
+  J. Karhunen$^{14}$,
   A. Karpushov$^{5}$,
   B. Labit$^5$,
   A. Meigs$^2$,
-  V. Naulin$^{14}$,
-  T. Pereira$^{15}$,
+  V. Naulin$^{15}$,
+  T. Pereira$^{16}$,
   H. Reimerdes$^5$,
   C. Theiler$^5$,
   the ASDEX-Upgrade Team,
@@ -101,21 +102,22 @@
   $^{8}$York Plasma Institute, University of York, UK,
   $^9$NCSR Athens GR,
   $^{10}$CIEMAT Laboratorio Nacional de Fusi{\'o}n, Madrid, Spain,
-  $^{11}$VTT, Espoo, Finland,
-  $^{12}$Forschungszentrum Julich,
-  $^{13}$Aalto University, Espoo, Finland,
-  $^{14}$DTU,  Copenhagen, Denmark,
-  $^{15}$IST/IPFN, Lisbon, Portugal
+  $^{11}$Division of Fusion Plasma Physics, KTH, Stockholm SE,
+  $^{12}$VTT, Espoo, Finland,
+  $^{13}$Forschungszentrum Julich,
+  $^{14}$Aalto University, Espoo, Finland,
+  $^{15}$DTU,  Copenhagen, Denmark,
+  $^{16}$IST/IPFN, Lisbon, Portugal
   $^{*}$See the author list B. Labit et al 2019 Nucl. Fusion 59 086020,
 $^{**}$See the authors list E. Joffrin et al 2019 Nucl. Fusion 59 112021}
-\date{\vspace{-3.5ex}}
 %%% ------------------------------------------------------------
 %%% BEGIN DOCUMENT
 %%% ------------------------------------------------------------
 \begin{document}
 \maketitle
+%
 \vspace{-1.2em}
-{\it \small Corresponding Author:} {nicola.vianello@igi.cnr.it}
+% {\it \small Corresponding Author:} {nicola.vianello@igi.cnr.it}
 
 Plasma Exhaust and Plasma Wall Interaction are subjects of intense studies
 in the context of fusion energy research for the understanding of the amount of heat
@@ -143,7 +145,7 @@ ensure maximum tolerable loads \cite{pitts:2019}.
 Thus experimental investigation
 of SOL transport needs to be extended to these regimes.
 In present experiments the regimes matching the ITER divertor operational point are obtained
-with high gas throughput leading to high density regimes. In L-Mode
+with high gas throughput leading to high density. In L-Mode
 these operational conditions are associated with the appearance of a
 \emph{density shoulder}
 i.e. progressive flattening of the density
@@ -159,7 +161,7 @@ through impurity seeding rather than high fuelling
 The density shoulder is actually accompained by
 an increase of the filamentary activity
 \cite{Carralero:2017gb,vianello:nf2019,Kuang:2019248}, together with an increase of
-their associated convective transport \cite{Carralero:2017gb}.
+their associated heat and particle convective transport \cite{Carralero:2017gb}.
 Preliminary investigations suggested that similar inter-ELM SOL
 density profile broadening is observed in H-mode as well
 \cite{Muller:2015jt,Carralero:2017gb,vianello:nf2019}, with a stronger
@@ -172,9 +174,9 @@ plasma changes its stability properties moving towards a small-ELM
 regime \cite{Harrer:2018jn} where a clear increase of
 the SOL density decay length is observed.
 Despite the
-large experimental effort, a comprehensive understanding
+large effort, a comprehensive understanding
 of the mechanism leading to an H-mode shoulder formation is presently
-lacking and this motivated a joint experimental effort within the
+lacking and this motivated a joint experimental program within the
 Eurofusion framework.
 The present contribution will show an unique comparison of H-Mode SOL
 density shoulder properties across 3 different devices, JET, ASDEX-Upgrade (AUG) and
@@ -194,7 +196,7 @@ plasma transport.
 
 On JET, 2MA/2.3T low $\delta$ plasma with 16 MW of
 applied NBI power were analyzed, with different levels of fueling exploring different divertor shapes
-in order to tackle the dependence of different neutral compression as well
+in order to tackle the dependence of neutral compression as well
 \cite{Tamain:2015cx}.
 On AUG 0.8MA/2.5T scenarios at different power levels (from 3 to 17 MW) and different fuelling
 schemes were analyzed in order to explore a wide range of divertor
@@ -225,7 +227,7 @@ These experimental results form an excellent basis to benchmark SOL
 modelling under various conditions in differently sized machines,
 providing a more complete characterization of the
 explored conditions in terms of divertor properties, upstream
-profiles, SOL fluctuation and pedestal evolution. These observations
+profiles, SOL fluctuation and induced transport and pedestal evolution. These observations
 consequently will strongly contribute to improve
 the understanding of SOL transport in conditions relevant fo the ITER divertor operation.
 

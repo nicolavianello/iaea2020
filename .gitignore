@@ -514,3 +514,6 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/latex,emacs,python,pycharm+all
+/IAEA 2018 Program CommitteeObservations on Preparation of Proposals for Conference.docx
+/Documents/cn-286-participation-form-local.pdf
+/Documents/cn-286-submission-form-local.pdf
